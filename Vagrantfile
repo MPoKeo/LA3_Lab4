@@ -2,9 +2,10 @@
 # vi: set ft=ruby :
 # encoding: UTF-8
 
-Vagrant.configure("2") do |config|
+Vagrant.configure("3") do |config|
 
 config.vm.provision "shell", path: "backup_script.sh"
+	
 
 	config.vm.define "box1" do |box1|
         box1.vm.box="ubuntu/trusty64"
@@ -14,7 +15,7 @@ config.vm.provision "shell", path: "backup_script.sh"
 	#SHELL
 
         box1.vm.network :forwarded_port, guest: 22, host: 10124, id: "ssh"
-        box1.vm.network :priveta_newtork, ip: "192.168.56.101"
+        box1.vm.network :private_network, ip: "192.168.56.101"
 
 	box1.vm.provider :virtualbox do |v| 
         v.customize ["modifyvm", :id, "--memory", 2048]
@@ -40,7 +41,7 @@ config.vm.provision "shell", path: "backup_script.sh"
  
     end
 
-	config.vm.define "box4" do |box3|
+	config.vm.define "box3" do |box3|
 
 	box3.vm.provision "shell", inline: <<-SHELL
 	sudo apt-get update && sudo apt-get upgrade
@@ -58,4 +59,4 @@ config.vm.provision "shell", path: "backup_script.sh"
 
     end
 
-en
+end
